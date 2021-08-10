@@ -1,4 +1,4 @@
-package com.javaguru.shoppinglist;
+package com.javaguru.shoppinglist.domain;
 
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -11,6 +11,7 @@ public class Product {
     private BigDecimal discount;
     private String description;
     private Category category;
+    private BigDecimal discountedPrice;
 
     public Long getId() {
         return id;
@@ -33,9 +34,6 @@ public class Product {
     }
 
     public void setPrice(BigDecimal price) {
-        if(price.doubleValue() <= 0){
-            throw new IllegalArgumentException("Price cannot be negative");
-        }
         this.price = price;
     }
 
@@ -52,9 +50,6 @@ public class Product {
     }
 
     public void setDiscount(BigDecimal discount) {
-        if(discount.doubleValue() > 100){
-            throw new IllegalArgumentException("Percentage discount cannot be more than 100%");
-        }
         this.discount = discount;
     }
 
@@ -63,10 +58,15 @@ public class Product {
     }
 
     public void setDescription(String description) {
-        if(description.length() < 3 || description.length() > 32){
-            throw new IllegalArgumentException("Description must be more than 3 and less than 32 characters");
-        }
         this.description = description;
+    }
+
+    public BigDecimal getDiscountedPrice() {
+        return discountedPrice;
+    }
+
+    public void setDiscountedPrice(BigDecimal discountedPrice) {
+        this.discountedPrice = discountedPrice;
     }
 
     @Override
@@ -74,14 +74,12 @@ public class Product {
         if (this == o) return true;
         if (!(o instanceof Product)) return false;
         Product product = (Product) o;
-        return id.equals(product.id) && name.equals(product.name) && price.equals(product.price)
-                && discount.equals(product.discount) && description.equals(product.description)
-                && category == product.category;
+        return Objects.equals(id, product.id) && Objects.equals(name, product.name) && Objects.equals(price, product.price) && Objects.equals(discount, product.discount) && Objects.equals(description, product.description) && category == product.category && Objects.equals(discountedPrice, product.discountedPrice);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, price, discount, description, category);
+        return Objects.hash(id, name, price, discount, description, category, discountedPrice);
     }
 
     @Override
@@ -93,6 +91,7 @@ public class Product {
                 ", discount=" + discount +
                 ", description='" + description + '\'' +
                 ", category=" + category +
+                ", discountedPrice=" + discountedPrice +
                 '}';
     }
 }
