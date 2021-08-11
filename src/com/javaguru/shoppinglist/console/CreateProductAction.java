@@ -22,7 +22,7 @@ public class CreateProductAction implements Action{
         Product product = new Product();
 
         System.out.println("Enter product name: ");
-        String name = scanner.nextLine();
+        String name = scanner.nextLine().toLowerCase();
         System.out.println("Please enter one of category: ");
         for (Category category : Category.values()) {
             System.out.println(category);
